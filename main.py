@@ -13,42 +13,9 @@ def folderCheckCreate(*therest):
             except os.error as e:
                 print(e)
 
-def moveIfDocument(fileDir, fileName):
-    destFolder = "Documents"
-    if fileName.lower().endswith((".pdf", ".doc",".docx", ".odt", ".txt")):
-        # print(x, 'is a PDF file')
-        folderCheckCreate(destFolder)
-        shutil.move(fileDir + x, fileDir + destFolder +'\\'+ x)
-def moveIfPicture(fileDir, fileName):
-    destFolder = "Pictures"
-    if fileName.lower().endswith((".jpg", ".jpeg",".bmp", ".png")):
-        folderCheckCreate(destFolder)
-        shutil.move(fileDir + x, fileDir + destFolder +'\\'+ x)
-def moveIfExecutable(fileDir, fileName):
-    destFolder = "Applications"
-    if fileName.lower().endswith(".exe"):
-        folderCheckCreate(destFolder)
-        shutil.move(fileDir + x, fileDir + destFolder +'\\'+ x)
-def moveIfISO(fileDir, fileName):
-    destFolder = "Disk images"
-    if fileName.lower().endswith(".iso"):
-        folderCheckCreate(destFolder)
-        shutil.move(fileDir + x, fileDir + destFolder +'\\'+ x)
-def moveIfArchive(fileDir, fileName):
-    destFolder = "Archives"
-    if fileName.lower().endswith((".zip", "rar", ".7z")):
-        folderCheckCreate(destFolder)
-        shutil.move(fileDir + x, fileDir + destFolder + '\\' + x)
-def moveIfSpreadsheet(fileDir, fileName):
-    destFolder = "Spreadsheets"
-    if fileName.lower().endswith((".xml", "xls", "xlsm", "xlsx")):
-        folderCheckCreate(destFolder)
-        shutil.move(fileDir + x, fileDir + destFolder + '\\' + x)
-def moveIfCode(fileDir, fileName):
-    destFolder = "Code"
-    if fileName.lower().endswith((".py", ".c", ".cpp", ".h", ".hpp")):
-        folderCheckCreate(destFolder)
-        shutil.move(fileDir + x, fileDir + destFolder + '\\' + x)
+def moveFile(fileDir, fileName, destFolder):
+    folderCheckCreate(destFolder)
+    shutil.move(fileDir + fileName, fileDir + destFolder + '\\' + fileName)
 
 start_time = time.process_time()
 
@@ -57,14 +24,24 @@ dirlist = os.listdir(myDir)
 
 for x in dirlist :
     if os.path.isfile(myDir+x):
-        moveIfDocument(myDir, x)
-        moveIfArchive(myDir, x)
-        moveIfCode(myDir, x)
-        moveIfExecutable(myDir, x)
-        moveIfISO(myDir, x)
-        moveIfPicture(myDir, x)
-        moveIfSpreadsheet(myDir, x)
-
+        fileExtension = x.rpartition('.')
+       # print(fileExtension[2])
+        if fileExtension[2].lower() in ("pdf", "doc","docx", "odt", "txt"):
+            moveFile(myDir, x, "Documents")
+        elif fileExtension[2].lower() in ("jpg", "jpeg","bmp", "png"):
+            moveFile(myDir, x, "Images")
+        elif fileExtension[2].lower() in ("exe"):
+            moveFile(myDir, x, "Applications")
+        elif fileExtension[2].lower() in ("iso"):
+            moveFile(myDir, x, "Disk Images")
+        elif fileExtension[2].lower() in ("zip","rar","7z"):
+            moveFile(myDir, x, "Archives")
+        elif fileExtension[2].lower() in ("xml","xls","xlsm","xlsx"):
+            moveFile(myDir, x,"Spreadsheets")
+        elif fileExtension[2].lower() in ("py", "c", "cpp", "h","hpp"):
+            moveFile(myDir, x, "Code")
+        else:
+            print("no defined action for",fileExtension[2].upper(), "file")
     else:
         print(x, "is not a file but and didnt tell me what to do with it")
-print("---%s seconds ---" % (time.process_time() -start_time))
+print("---%s seconds ---" % (time.process_time() - start_time))

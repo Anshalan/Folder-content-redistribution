@@ -9,7 +9,7 @@ def reverse(dirPath, folderNames):
             os.rmdir(dirPath+"\\"+x)
 
 myDir = "C:\\Users\\jedrz\\Downloads\\"
-folderNames = ("Documents", "Pictures", "Applications", "Disk images", "Archives","Spreadsheets","Code")
+folderNames = ("Documents", "Images", "Applications", "Disk images", "Archives","Spreadsheets","Code")
 
 reverse(myDir,folderNames)
 print("---%s seconds ---" % (time.process_time() -start_time))
