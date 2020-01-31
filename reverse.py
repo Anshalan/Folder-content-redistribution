@@ -1,5 +1,7 @@
 import os, shutil
 import time
+import GUI
+
 start_time = time.process_time()
 def reverse(dirPath, folderNames):
     for x in list(folderNames):
@@ -8,7 +10,8 @@ def reverse(dirPath, folderNames):
                 shutil.move(dirPath+"\\"+x+"\\"+file, dirPath+"\\"+file)
             os.rmdir(dirPath+"\\"+x)
 
-myDir = "C:\\Users\\jedrz\\Downloads\\"
+# myDir = GUI.getDirectory()+"/"
+myDir ="C:\\Users\\jedrz\\Downloads\\"
 folderNames = ("Documents", "Images", "Applications", "Disk images", "Archives","Spreadsheets","Code")
 
 reverse(myDir,folderNames)
